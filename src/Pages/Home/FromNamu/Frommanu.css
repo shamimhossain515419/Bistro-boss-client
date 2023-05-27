@@ -1,0 +1,7 @@
+.frommanu{
+      background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.784), rgba(10, 4, 4, 0.673)),url('../../../assets/home/featured.jpg');
+      background-attachment: fixed;
+      width: 100%;
+      padding: 10px;
+      height: 70vh;
+}
