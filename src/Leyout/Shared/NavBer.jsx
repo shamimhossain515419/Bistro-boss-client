@@ -1,14 +1,20 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/Authprovider";
 import Swal from "sweetalert2";
 
+import { FaShoppingCart } from 'react-icons/fa';
+import { useState } from "react";
+import useCard from "../../Hooks/UseDatauser/useCard";
+
 
 const NavBer = () => {
-  const { user, logOut } = useContext(AuthContext);
+const { user, logOut } = useContext(AuthContext);
+const [cart]=useCard();
+const navigete=useNavigate()
   const handleLogut = () => {
     logOut().then( () => {
-   
+      navigete('/')
       Swal.fire('sing out Successfully')
     }).catch(error => {
       console.log(error)
@@ -24,6 +30,14 @@ const NavBer = () => {
     <li> <Link to={'/'}>Home</Link> </li>
     <li> <Link to={'/menu'}>Our Menu</Link> </li>
     <li> <Link to={'/order/salad'}>Order</Link> </li>
+    <li>
+            <Link  to={'/dashboard/mycard'}>
+                <button className="btn gap-2">
+                    <FaShoppingCart></FaShoppingCart>
+                    <div className="badge badge-secondary"> + { cart?cart.length : 0}</div>
+                </button>
+            </Link>
+        </li>
     {
       user ? <> <li> <button onClick={handleLogut}>Logout</button> </li></> : <><li> <Link to={'/login'}>Login</Link> </li> </>
     }

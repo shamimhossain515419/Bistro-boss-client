@@ -2,7 +2,7 @@ import Cardmenu from "../../../Componets/Cardmenu";
 
 
 const OrderCard = ({items}) => {
-     console.log(items);
+  
      return (
           <div className=" grid md:grid-cols-3 gap-6 ">
                {

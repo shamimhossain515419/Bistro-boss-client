@@ -5,6 +5,10 @@ import ManuOur from "../Pages/Home/Manu/Manu/ManuOur";
 import Order from "../Pages/Orders/Orders/Order";
 import Login from "../Pages/Login/Login";
 import Ragister from "../Pages/Login/Ragister";
+import PrivateRoute from "./PriveteRoute/PrivateRoute";
+import Dashbord from "../Leyout/Dashbord";
+import Mycart from "../Pages/Dashboard/Mycart/Mycart";
+import Allusers from "../Pages/Dashboard/Allusers/Allusers";
 
 const Router = createBrowserRouter([
      {
@@ -25,7 +29,7 @@ const Router = createBrowserRouter([
           },
           {
              path:'/order/:category',
-             element:<Order></Order>
+             element: <PrivateRoute> <Order></Order> </PrivateRoute>  
           },
           {
              path:'/ragister',
@@ -33,6 +37,20 @@ const Router = createBrowserRouter([
           }
         ]
      },
+     {
+      path:'dashboard',
+      element: <PrivateRoute><Dashbord></Dashbord></PrivateRoute>,
+      children:[
+         {
+            path:'mycard',
+            element: <Mycart></Mycart> 
+         },
+         {
+            path:'AllUsers',
+            element: <Allusers></Allusers>
+         }
+      ]
+     }
    ]);
 
    export default Router;

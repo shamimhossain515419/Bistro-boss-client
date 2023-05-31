@@ -5,9 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/Authprovider';
 import Swal from 'sweetalert2';
-import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
+import SocaleLogin from './SocaleLogin';
 const Ragister = () => {
-     const { creacUser } = useContext(AuthContext);
+     const { creacUser, updateUserProfile } = useContext(AuthContext);
      const navigate = useNavigate();
      const { register, handleSubmit, reset, formState: { errors } } = useForm();
      const onSubmit = data => {
@@ -15,16 +15,51 @@ const Ragister = () => {
           creacUser(data.email, data.password)
                .then(result => {
                     console.log(result.user);
-                    Swal.fire('User Sing Successfully')
-                    reset();
-                    navigate('/');
+                    updateUserProfile(data.name, data.photo)
+                         .then(() => {
+
+                         const saveUser = { name: data.name, email: data.email }
+                              fetch('http://localhost:5000/user', {
+                                  method: 'POST',
+                                  headers: {
+                                      'content-type': 'application/json'
+                                  },
+                                  body: JSON.stringify(saveUser)
+                              })
+                              .then(res => res.json())
+                              .then(data => {
+                                      if (data.insertedId) {
+                                          reset();
+                                          Swal.fire({
+                                              position: 'top-end',
+                                              icon: 'success',
+                                              title: 'User created successfully.',
+                                              showConfirmButton: false,
+                                              timer: 1500
+                                          });
+                                          navigate('/');
+                                      }
+                              })
+
+
+                         }).catch(error => {
+                              Swal.fire({
+                                   icon: 'error',
+                                   title: `${error.massage}`,
+                                   text: 'Something went wrong!',
+
+                              })
+                         })
+
+
+
                }).catch(error => [
 
                     Swal.fire({
                          icon: 'error',
-                         title: `${error.massage }`,
+                         title: `${error.massage}`,
                          text: 'Something went wrong!',
-                         
+
                     })
                ])
      }
@@ -41,7 +76,7 @@ const Ragister = () => {
                          <h1 className='  text-center text-2xl font-bold text-blue-500 '> Ragitation</h1>
                          <form onSubmit={handleSubmit(onSubmit)}>
                               <div className=' w-full'>
-                                   <label className=' text-xl font-bold my-2' htmlFor="Email"> Email:</label>
+                                   <label className=' text-xl font-bold my-2' htmlFor="Email"> Name:</label>
                                    <input  {...register("name", { required: true })} name='name' className=' mt-2  border-2 p-2   border-[#0000007d] rounded-md  focus:outline-blue-500 block w-full' type="text" placeholder=" name" id="" />
                                    {errors.name && <span className="text-red-500">Name is required</span>}
                               </div>
@@ -83,11 +118,7 @@ const Ragister = () => {
                               <div>
                                    <p className=' text-base my-5  font-medium text-center'>Or sign in with</p>
                               </div>
-                              <div className=' my-3 px-2 flex gap-6  justify-center items-center'>
-                                   <FaGoogle className='   cursor-pointer text-[#cf7d03] text-2xl'></FaGoogle>
-                                   <FaGithub className=' cursor-pointer text-2xl'></FaGithub>
-                                   <FaFacebook className=' cursor-pointer text-[#4450d5] text-2xl'></FaFacebook>
-                              </div>
+                              <SocaleLogin></SocaleLogin>
                          </form>
 
 

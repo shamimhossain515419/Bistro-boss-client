@@ -12,7 +12,7 @@ const Order = () => {
      const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks'];
      const { category } = useParams();
      const initialIndex = categories.indexOf(category);
-     console.log(initialIndex);
+    
      const [tabIndex, setTabIndex] = useState(initialIndex);
      const [product] = useMenu();
      const drinks = product.filter(pd => pd.category == "drinks");
@@ -20,7 +20,7 @@ const Order = () => {
      const pizza = product.filter(pd => pd.category == "pizza");
      const salad = product.filter(pd => pd.category == "salad");
      const soup = product.filter(pd => pd.category == "soup");
-     console.log(drinks);
+    
 
      return (
           <div>
