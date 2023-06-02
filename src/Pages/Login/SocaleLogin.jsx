@@ -14,9 +14,9 @@ const SocaleLogin = () => {
      const handleGoogle = () => {
           Googlesing().then(result => {
                const user=result.user;
-               console.log(user);
+               // console.log(user);
                const saveuser={name:user.displayName, email:user.email};
-                 fetch('http://localhost:5000/user',
+                 fetch('https://bistro-boss-server-ten.vercel.app/user',
                    {
                      method:"POST",
                      headers:{

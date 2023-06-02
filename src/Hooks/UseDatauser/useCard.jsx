@@ -10,7 +10,7 @@ const useCard = () => {
     const {refetch, data:cart=[]} = useQuery({
           queryKey: ['carts', user?.email],
           queryFn: async () => {
-          const res = await  fetch(`http://localhost:5000/carts?email=${user?.email}`, {
+          const res = await  fetch(`https://bistro-boss-server-ten.vercel.app/carts?email=${user?.email}`, {
             headers:{
                authorization: ` bearer ${token}`
              }

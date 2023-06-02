@@ -24,7 +24,7 @@ const Login = () => {
 
 
           singIn(email, password).then(result => {
-               console.log(result.user);
+               // console.log(result.user);
                Swal.fire('User login Successfully')
                navigete(from)
                form.reset();
@@ -37,7 +37,7 @@ const Login = () => {
                     text: 'Something went wrong!',
 
                });
-               console.log(error);
+               // console.log(error);
           })
 
      }

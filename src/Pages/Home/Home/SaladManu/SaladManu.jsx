@@ -7,7 +7,7 @@ const SaladManu = () => {
      const [items, setITems] = useState([]);
 
      useEffect(() => {
-          fetch("http://localhost:5000/menu").then(res => res.json())
+          fetch("https://bistro-boss-server-ten.vercel.app/menu").then(res => res.json())
                .then(data => {
                     const populorManu = data.filter(item => item.category === "salad")
                     setITems(populorManu)

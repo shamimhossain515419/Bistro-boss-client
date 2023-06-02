@@ -5,7 +5,7 @@ import useCard from "../Hooks/UseDatauser/useCard";
 import useAdmin from "../Hooks/UseDatauser/useAdmin";
 
 const Dashbord = () => {
-const [admin]=useAdmin();
+const [isAdmin]=useAdmin();
 const [cart] = useCard();
 
      return (
@@ -23,10 +23,10 @@ const [cart] = useCard();
                          <ul className="menu p-4 w-80 bg-[#D1A054] ">
 
                               {
-                               admin?.admin==true ? <>
+                              isAdmin==true ? <>
                                         <li><NavLink to="/dashboard/home"><FaHome></FaHome> Admin Home</NavLink></li>
-                                        <li><NavLink to="/dashboard/reservations"> <FaUtensils></FaUtensils> Add Items</NavLink></li>
-                                        <li><NavLink to="/dashboard/history"><FaWallet></FaWallet> Manage Items</NavLink></li>
+                                        <li><NavLink to="/dashboard/additem"> <FaUtensils></FaUtensils> Add on  Items</NavLink></li>
+                                        <li><NavLink to="/dashboard/manngeitem"><FaWallet></FaWallet> Manage Item</NavLink></li>
                                         <li><NavLink to="/dashboard/history"><FaBook></FaBook> Manage Bookings</NavLink></li>
                                         <li><NavLink to="/dashboard/AllUsers"><FaUsers></FaUsers> All Users</NavLink></li> </>
                                         : <>

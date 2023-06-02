@@ -1,61 +1,59 @@
-import { FaTrashAlt } from "react-icons/fa";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import SectionTitle from "../../../Componets/SectionTitle";
-import useCard from "../../../Hooks/UseDatauser/useCard";
+import useMenu from "../../../useMenu/useMenu";
+import useAxiosSecure from "../../../Hooks/UseDatauser/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 
-const Mycart = () => {
-     const [cart,refetch] = useCard();
 
+const MannageItem = () => {
+     const [axiosSecure]=useAxiosSecure();
+const [product,refetch,loading] = useMenu();
 
-
-     const total = cart.reduce((sum, item) => item.price + sum, 0);
-     const handleDelete = (item) => {
-          // console.log(item);
-          Swal.fire({
-               title: 'Are you sure?',
-               text: "You won't be able to revert this!",
-               icon: 'warning',
-               showCancelButton: true,
-               confirmButtonColor: '#3085d6',
-               cancelButtonColor: '#d33',
-               confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-               if (result.isConfirmed) {
-                    fetch(`https://bistro-boss-server-ten.vercel.app/carts/${item}`, {
-                         method: 'DELETE'
-                     })
-                         .then(res => res.json())
-                         .then(data => {
-                             if (data.deletedCount > 0) {
-                                 refetch();
-                                 Swal.fire(
-                                     'Deleted!',
-                                     'Your file has been deleted.',
-                                     'success'
-                                 )
-                             }
-                     })
-
-               }
-          })
-
-     }
+const handleDelete= (item)=>{
+       Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+               // console.log(item);
+                axiosSecure.delete(`menu/${item}`) 
+                .then(res => {
+                    // console.log('deleted res', res.data);
+                    if (res.data.deletedCount > 0) {
+                        refetch();
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+               
+            
+          }
+        })
+    
+   
+}
 
 
      return (
-          <div className=" mt-4">
-               <SectionTitle subTitle={"---My Cart---"} HeaderTitle={"WANNA ADD MORE?"}> </SectionTitle>
-
-               <div className=" shadow-md p-4 rounded-md">
+          <div className=" my-3">
+               <SectionTitle subTitle="---Hurry Up!--- " HeaderTitle="MANAGE ALL ITEMS"></SectionTitle>
+          <div className=" mt-4"> 
+          <div className=" shadow-md p-4 rounded-md">
                     <div className=" text-black flex justify-evenly items-center  my-5">
-                         <h1 className="text-3xl font-semibold"> Total items {cart.length} </h1>
-                         <h1 className="text-3xl font-semibold"> Total Price ${total.toFixed(2)} </h1>
-                         
-                          <Link to={'/dashboard/payment'}> 
+                         <h1 className="text-3xl font-semibold"> Total items {product.length} </h1>
+
                          <button className=" text-2xl font-bold py-2 px-4 rounded  text-white bg-[#D1A054]">PAY</button>
-                           </Link>
+
                     </div>
 
 
@@ -73,12 +71,13 @@ const Mycart = () => {
                                              <th>Name items</th>
                                              <th>Price items</th>
                                              <th>Action</th>
+                                             <th>Action</th>
 
                                         </tr>
                                    </thead>
                                    <tbody>
                                         {
-                                             cart.map((item, index) => (
+                                             product.map((item, index) => (
                                                   <tr key={item._id}>
                                                        <th>
                                                             {index + 1}
@@ -94,6 +93,9 @@ const Mycart = () => {
                                                             <p className=" text-xl font-semibold"> {item.name}</p>
                                                        </td>
                                                        <td> ${item.price}</td>
+                                                       <th>
+                                                       <Link to={`/dashboard/menu/${item._id}`}> <button  className=" bg-[#D1A054] text-white p-2 rounded"><FaEdit></FaEdit></button></Link>
+                                                       </th>
                                                        <th>
                                                             <button onClick={() => handleDelete(item._id)} className=" bg-[#ea1919] text-white p-2 rounded"><FaTrashAlt></FaTrashAlt></button>
                                                        </th>
@@ -112,7 +114,10 @@ const Mycart = () => {
 
                </div>
           </div>
+         
+         
+          </div>
      );
 };
 
-export default Mycart;
+export default MannageItem;

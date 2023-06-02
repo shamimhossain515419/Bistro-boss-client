@@ -11,7 +11,7 @@ const Allusers = () => {
      const { data: users = [], refetch } = useQuery({
           queryKey: ['users'],
           queryFn: async () => {
-               const data = await fetch('http://localhost:5000/users',{
+               const data = await fetch('https://bistro-boss-server-ten.vercel.app/users',{
                      headers:{
                          authorization: ` bearer ${token}`
                      }
@@ -21,7 +21,7 @@ const Allusers = () => {
      })
 
      const handleAdmin = (item) => {
-         fetch(`http://localhost:5000/users/admin/${item._id}`,
+         fetch(`https://bistro-boss-server-ten.vercel.app/users/admin/${item._id}`,
          {
            method:"PATCH"
          }).then(res=>res.json())
@@ -39,7 +39,23 @@ const Allusers = () => {
          })
      }
      const handleDelete = (item) => {
-
+          fetch(`https://bistro-boss-server-ten.vercel.app/users/${item}`,{
+                method:"DELETE"
+          })
+          .then(res=>res.json())
+          .then(data=> {
+                if(data.deletedCount){
+                    refetch();
+                    Swal.fire({
+                         position: 'top-end',
+                         icon: 'success',
+                         title: `${item.name} is an Delete Now!`,
+                         showConfirmButton: false,
+                         timer: 1500
+                       }) 
+                }
+              
+          })
      }
 
      if(user == null){

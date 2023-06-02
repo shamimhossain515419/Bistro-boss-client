@@ -9,6 +9,11 @@ import PrivateRoute from "./PriveteRoute/PrivateRoute";
 import Dashbord from "../Leyout/Dashbord";
 import Mycart from "../Pages/Dashboard/Mycart/Mycart";
 import Allusers from "../Pages/Dashboard/Allusers/Allusers";
+import RouteAddmin from "./RouteAddmin";
+import AddItem from "../Pages/Dashboard/AddItem/Additem";
+import MannageItem from "../Pages/Dashboard/MannageItem/MannageItem";
+import Updateitem from "../Pages/Dashboard/UpdateItem/Updateitem";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 
 const Router = createBrowserRouter([
      {
@@ -46,8 +51,27 @@ const Router = createBrowserRouter([
             element: <Mycart></Mycart> 
          },
          {
+            path:'payment',
+            element:<Payment></Payment>
+         },
+
+         // admin route
+         {
             path:'AllUsers',
-            element: <Allusers></Allusers>
+            element: <RouteAddmin> <Allusers></Allusers></RouteAddmin> 
+         },
+         {
+            path:'additem',
+            element: <RouteAddmin><AddItem></AddItem> </RouteAddmin> 
+         },
+         {
+            path:'manngeitem',
+            element: <RouteAddmin><MannageItem></MannageItem> </RouteAddmin> 
+         },
+         {
+            path:'menu/:id',
+            element: <RouteAddmin><Updateitem></Updateitem> </RouteAddmin>,
+            loader:({params})=>fetch(`https://bistro-boss-server-ten.vercel.app/menu/${params.id}`) 
          }
       ]
      }

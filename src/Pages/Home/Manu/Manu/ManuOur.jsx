@@ -13,7 +13,8 @@ import Category from "./Category";
 
 const ManuOur = () => {
 
-  const [product] = useMenu();
+  const [product,refetch,loading] = useMenu();
+  console.log(product);
   const offered = product.filter(pd => pd.category == "offered");
   const dessert = product.filter(pd => pd.category == "dessert");
   const pizza = product.filter(pd => pd.category == "pizza");

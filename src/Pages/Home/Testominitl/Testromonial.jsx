@@ -15,7 +15,7 @@ const Testromonial = () => {
      const [reaveiws, setReaveiw] = useState([]);
 
      useEffect(() => {
-          fetch('http://localhost:5000/review').then(res => res.json())
+          fetch('https://bistro-boss-server-ten.vercel.app/review').then(res => res.json())
                .then(data => setReaveiw(data))
      }, []);
 

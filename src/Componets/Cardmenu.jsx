@@ -16,7 +16,7 @@ const Cardmenu = ({ item }) => {
           
           if(user && user.email){
               const cartItem = {menuItemId: _id, name, image, price, email: user.email}
-              fetch('http://localhost:5000/carts', {
+              fetch('https://bistro-boss-server-ten.vercel.app/carts', {
                   method: 'POST',
                   headers: {
                       'content-type': 'application/json'
@@ -61,7 +61,7 @@ const Cardmenu = ({ item }) => {
                <div className="card card-compact w-96 bg-base-100 shadow-xl">
                          <figure><img src={image} alt="Shoes" /></figure>
                          <div className="card-body text-center" >
-                              <h2 className=" text-2xl font-semibold my-1 text-center">{item.name}</h2>
+                              <h2 className=" text-2xl font-semibold my-1 text-center">{name}</h2>
                               <p>{recipe}</p>
                             
                               <button onClick={() => handleAddToCart(item)} className="btn btn-outline  btn-primary border-0 border-b-4 ">Buy Now</button>

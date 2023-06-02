@@ -11,15 +11,15 @@ const Ragister = () => {
      const navigate = useNavigate();
      const { register, handleSubmit, reset, formState: { errors } } = useForm();
      const onSubmit = data => {
-          console.log(data);
+          // console.log(data);
           creacUser(data.email, data.password)
                .then(result => {
-                    console.log(result.user);
+                    // console.log(result.user);
                     updateUserProfile(data.name, data.photo)
                          .then(() => {
 
                          const saveUser = { name: data.name, email: data.email }
-                              fetch('http://localhost:5000/user', {
+                              fetch('https://bistro-boss-server-ten.vercel.app/user', {
                                   method: 'POST',
                                   headers: {
                                       'content-type': 'application/json'

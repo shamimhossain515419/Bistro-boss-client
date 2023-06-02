@@ -7,7 +7,7 @@ import useMenu from "../../useMenu/useMenu";
 
 const PopularManu = () => {
   
-   const [product]=useMenu();
+   const [product,refetch,loading]=useMenu();
    const items=product.filter(item=>item.category=="popular")
 
      return (
