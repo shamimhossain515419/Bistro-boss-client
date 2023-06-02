@@ -5,8 +5,10 @@ import useAxiosSecure from '../../Hooks/UseDatauser/useAxiosSecure';
 import { AuthContext } from '../../AuthProvider/Authprovider';
 import Swal from 'sweetalert2';
 import './Chackout.css'
+import { useNavigate } from 'react-router-dom';
 const Chackout = ({ cart, price }) => {
      const { user } = useContext(AuthContext)
+     const Navigete=useNavigate();
      const stripe = useStripe();
      const [axiosSecure] = useAxiosSecure()
      const [cardError, setCardError] = useState('');
@@ -23,7 +25,7 @@ const Chackout = ({ cart, price }) => {
                          setClientSecret(res.data.clientSecret);
                     })
           }
-     }, [])
+     }, [price,axiosSecure])
 
 
 
@@ -85,13 +87,12 @@ const Chackout = ({ cart, price }) => {
                     menuItems: cart.map(item => item.menuItemId),
                     status: 'service pending',
                     itemNames: cart.map(item => item.name)
-
-               }
+   }
 
                axiosSecure.post('/payment', payment)
                     .then(res => {
-                         console.log(res.data);
-                         if (res.data.insertedId) {
+                       if (res.data.insertResult) {
+                         Navigete('/')
                               Swal.fire({
                                    title: 'Payment Success ',
                                    showClass: {

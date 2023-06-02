@@ -3,14 +3,16 @@ import SectionTitle from "../../../Componets/SectionTitle";
 import useCard from "../../../Hooks/UseDatauser/useCard";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 
 const Mycart = () => {
-     const [cart,refetch] = useCard();
+     const [cart, refetch] = useCard();
 
 
 
      const total = cart.reduce((sum, item) => item.price + sum, 0);
+    
      const handleDelete = (item) => {
           // console.log(item);
           Swal.fire({
@@ -25,18 +27,18 @@ const Mycart = () => {
                if (result.isConfirmed) {
                     fetch(`https://bistro-boss-server-ten.vercel.app/carts/${item}`, {
                          method: 'DELETE'
-                     })
+                    })
                          .then(res => res.json())
                          .then(data => {
-                             if (data.deletedCount > 0) {
-                                 refetch();
-                                 Swal.fire(
-                                     'Deleted!',
-                                     'Your file has been deleted.',
-                                     'success'
-                                 )
-                             }
-                     })
+                              if (data.deletedCount > 0) {
+                                   refetch();
+                                   Swal.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                   )
+                              }
+                         })
 
                }
           })
@@ -52,10 +54,10 @@ const Mycart = () => {
                     <div className=" text-black flex justify-evenly items-center  my-5">
                          <h1 className="text-3xl font-semibold"> Total items {cart.length} </h1>
                          <h1 className="text-3xl font-semibold"> Total Price ${total.toFixed(2)} </h1>
-                         
-                          <Link to={'/dashboard/payment'}> 
-                         <button className=" text-2xl font-bold py-2 px-4 rounded  text-white bg-[#D1A054]">PAY</button>
-                           </Link>
+
+                         <Link to={'/dashboard/payment'}>
+                         <button  className=" text-2xl font-bold py-2 px-4 rounded  text-white bg-[#D1A054]">PAY</button>
+                         </Link>
                     </div>
 
 
